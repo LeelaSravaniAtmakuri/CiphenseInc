@@ -7,7 +7,7 @@ from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie2000
 
-img = cv2.imread(r"D:\Intern\test images\test13.jpg")
+img = cv2.imread(r"F:\test images\test13.jpg")
 #img = cv2.resize(img,(250,400))
 img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 cv2.imshow("Original",img)
@@ -87,10 +87,13 @@ delta_e = delta_e_cie2000(color1_lab, color2_lab);
 
 print ("The difference between the 2 color = ", delta_e)
 
-# Impose a threshold either from user or hard-coded
-threshold = int(input())
-#threshold = 20
-if delta_e > threshold:
-    print("Asymmetry exists")
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+# Impose a threshold either from user or hard-coded
+#threshold = int(input("Enter a threshold: "))
+threshold = 25
+if delta_e > threshold:
+    print("Asymmetry exists!")
+else:
+    print("Everything is fine!")
