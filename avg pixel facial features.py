@@ -39,30 +39,32 @@ if len(face)!=0:
 
         eyes = eyes_detect.detectMultiScale(roi_gray, 1.2)  # Haarcascades classifier for eyes
         i=1
-        for (ex, ey, ew, eh) in eyes:  # Draw rectangle around eyes
-            cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-            roi_color_e = roi_color_f[ey:ey+eh,ex:ex+ew]
-            cv2.imwrite("eyes.jpg", roi_color_e)
-            im_e = Image.open(r"eyes.jpg")
-            print("Avg pixel intensity for eye",i,":", calcAvgPixel(im_e))
-            i=i+1
+        if len(eyes)!=0:
+            for (ex, ey, ew, eh) in eyes:  # Draw rectangle around eyes
+                cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+                roi_color_e = roi_color_f[ey:ey+eh,ex:ex+ew]
+                cv2.imwrite("eyes.jpg", roi_color_e)
+                im_e = Image.open(r"eyes.jpg")
+                print("Avg pixel intensity for eye",i,":", calcAvgPixel(im_e))
+                i=i+1
         nose = nose_detect.detectMultiScale(roi_gray,1.1)  # Haarcascades classifier for nose
-
-        for (nx, ny, nw, nh) in nose:  # Draw rectangle around nose
-            cv2.rectangle(roi_color, (nx, ny), (nx + nw, ny + nh), (255, 255, 0), 2)
-            roi_color_n = roi_color_f[ny:ny + nh, nx:nx + nw]
-            cv2.imwrite("nose.jpg", roi_color_n)
-            im_n = Image.open(r"nose.jpg")
-            print("Avg pixel intensity for nose:", calcAvgPixel(im_n))
+        if len(nose)!=0:
+            for (nx, ny, nw, nh) in nose:  # Draw rectangle around nose
+                cv2.rectangle(roi_color, (nx, ny), (nx + nw, ny + nh), (255, 255, 0), 2)
+                roi_color_n = roi_color_f[ny:ny + nh, nx:nx + nw]
+                cv2.imwrite("nose.jpg", roi_color_n)
+                im_n = Image.open(r"nose.jpg")
+                print("Avg pixel intensity for nose:", calcAvgPixel(im_n))
 
         mouth = mouth_detect.detectMultiScale(roi_gray, 1.2,45)  # Haarcascades classifier for mouth
-
-        for (mx, my, mw, mh) in mouth:  # Draw rectangle around mouth
-            cv2.rectangle(roi_color, (mx, my), (mx + mw, my + mh), (0, 255, 255), 2)
-            roi_color_m = roi_color_f[my:my + mh, mx:mx + mw]
-            cv2.imwrite("mouth.jpg", roi_color_m)
-            im_m = Image.open(r"mouth.jpg")
-            print("Avg pixel intensity for mouth:",calcAvgPixel(im_m))
+        
+        if len(mouth)!=0:
+            for (mx, my, mw, mh) in mouth:  # Draw rectangle around mouth
+                cv2.rectangle(roi_color, (mx, my), (mx + mw, my + mh), (0, 255, 255), 2)
+                roi_color_m = roi_color_f[my:my + mh, mx:mx + mw]
+                cv2.imwrite("mouth.jpg", roi_color_m)
+                im_m = Image.open(r"mouth.jpg")
+                print("Avg pixel intensity for mouth:",calcAvgPixel(im_m))
 cv2.imshow("Detected facial feaures", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
