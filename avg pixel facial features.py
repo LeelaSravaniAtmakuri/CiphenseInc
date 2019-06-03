@@ -47,7 +47,10 @@ if len(face)!=0:
                 im_e = Image.open(r"eyes.jpg")
                 print("Avg pixel intensity for eye",i,":", calcAvgPixel(im_e))
                 i=i+1
+                if i>2:
+                    break
         nose = nose_detect.detectMultiScale(roi_gray,1.1)  # Haarcascades classifier for nose
+        j=1
         if len(nose)!=0:
             for (nx, ny, nw, nh) in nose:  # Draw rectangle around nose
                 cv2.rectangle(roi_color, (nx, ny), (nx + nw, ny + nh), (255, 255, 0), 2)
@@ -55,9 +58,12 @@ if len(face)!=0:
                 cv2.imwrite("nose.jpg", roi_color_n)
                 im_n = Image.open(r"nose.jpg")
                 print("Avg pixel intensity for nose:", calcAvgPixel(im_n))
+                j=j+1
+                if j>1:
+                    break
 
         mouth = mouth_detect.detectMultiScale(roi_gray, 1.2,45)  # Haarcascades classifier for mouth
-        
+        k=1
         if len(mouth)!=0:
             for (mx, my, mw, mh) in mouth:  # Draw rectangle around mouth
                 cv2.rectangle(roi_color, (mx, my), (mx + mw, my + mh), (0, 255, 255), 2)
@@ -65,6 +71,9 @@ if len(face)!=0:
                 cv2.imwrite("mouth.jpg", roi_color_m)
                 im_m = Image.open(r"mouth.jpg")
                 print("Avg pixel intensity for mouth:",calcAvgPixel(im_m))
+                k=k+1
+                if k>1:
+                    break
 cv2.imshow("Detected facial feaures", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
